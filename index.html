@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Iwak Asepan Trawas — Aneka Ikan Asap Batok Kelapa</title>
+<meta name="description" content="Aneka ikan asap laut maupun tawar, diasap dengan batok kelapa asli. Pesan online, nota otomatis.">
+<style>
+:root{--hijau:#0f4a3a;--hijau2:#176b53;--emas:#e8c987;--coklat:#b5733d;--krem:#fbf6ea;--teks:#2a2a22}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Georgia,'Times New Roman',serif;background:var(--hijau);color:var(--krem);line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+header{text-align:center;padding:36px 16px 24px;background:radial-gradient(circle at top,var(--hijau2),var(--hijau))}
+header small{letter-spacing:.35em;color:var(--emas);font-size:.8rem}
+header h1{font-size:2.4rem;color:var(--emas);line-height:1.1;margin:6px 0}
+header p{opacity:.9}
+.badge{display:inline-block;margin-top:12px;padding:6px 14px;border:1px solid var(--emas);border-radius:20px;font-size:.85rem;color:var(--emas)}
+section{padding:22px 0}
+h2{color:var(--emas);font-size:1.3rem;margin-bottom:12px;text-align:center}
+.menu{display:grid;gap:10px}
+.item{display:flex;align-items:center;gap:10px;background:var(--krem);color:var(--teks);border-radius:12px;padding:12px 14px}
+.item .nama{flex:1;font-weight:bold}
+.item .nama span{display:block;font-weight:normal;font-size:.8rem;color:#6b6b5c}
+.item select,.item input{font:inherit}
+.qty{width:64px;padding:6px;border:1px solid #c9bfa5;border-radius:8px;text-align:center}
+.hargasel{padding:6px;border:1px solid #c9bfa5;border-radius:8px;background:#fff;max-width:110px}
+.hargatxt{color:var(--coklat);font-weight:bold;white-space:nowrap}
+form .card{background:var(--krem);color:var(--teks);border-radius:14px;padding:16px;margin-top:12px}
+label{display:block;font-size:.85rem;margin:10px 0 4px;font-weight:bold}
+input[type=text],input[type=tel],input[type=date],select.f,textarea{width:100%;padding:10px;border:1px solid #c9bfa5;border-radius:8px;font:inherit;background:#fff}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.total{display:flex;justify-content:space-between;font-size:1.15rem;font-weight:bold;margin-top:12px;color:var(--hijau)}
+button{width:100%;margin-top:14px;padding:14px;border:0;border-radius:12px;background:var(--coklat);color:#fff;font:bold 1.05rem Georgia,serif;cursor:pointer}
+button.alt{background:var(--hijau2)}
+button.wa{background:#1fa855}
+.err{color:#b3261e;font-size:.85rem;margin-top:8px;display:none}
+#nota{display:none}
+.nota{background:#fff;color:#222;border-radius:6px;padding:20px;font-family:'Courier New',monospace;font-size:.9rem}
+.nota h3{text-align:center;color:var(--hijau);font-family:Georgia,serif}
+.nota hr{border:0;border-top:1px dashed #999;margin:10px 0}
+.nota table{width:100%;border-collapse:collapse}
+.nota td{padding:2px 0;vertical-align:top}
+.nota td:last-child{text-align:right;white-space:nowrap}
+.rek{background:#f3efe2;padding:8px 10px;border-radius:6px;margin:4px 0}
+footer{text-align:center;padding:24px 16px;font-size:.8rem;opacity:.8}
+@media print{body{background:#fff}header,section:not(#notasec),footer,.noprint{display:none!important}.nota{border:0}}
+</style>
+</head>
+<body>
+
+<header>
+  <small>ANEKA</small>
+  <h1>Iwak Asepan Trawas</h1>
+  <p>Ikan asap laut maupun tawar<br><em>Diasap dengan batok kelapa asli — lebih keset, lebih sedep</em></p>
+  <span class="badge">100% Bahan Alami • Bersih &amp; Higienis</span>
+</header>
+
+<div class="wrap">
+<form id="form" onsubmit="return buatNota(event)">
+  <section id="menusec">
+    <h2>1. Pilih Ikan Asap</h2>
+    <div class="menu" id="menu"></div>
+  </section>
+
+  <section>
+    <h2>2. Data Pemesan &amp; Pengiriman</h2>
+    <div class="card">
+      <label for="nama">Nama</label>
+      <input type="text" id="nama" required>
+      <label for="wa">No. WhatsApp</label>
+      <input type="tel" id="wa" placeholder="08xxxxxxxxxx" required>
+      <label for="alamat">Alamat pengiriman</label>
+      <textarea id="alamat" rows="2" required></textarea>
+      <div class="row">
+        <div><label for="tgl">Tanggal kirim</label><input type="date" id="tgl" required></div>
+        <div><label for="jam">Jam kirim</label><input type="time" id="jam" required></div>
+      </div>
+      <label for="catatan">Catatan (opsional)</label>
+      <input type="text" id="catatan" placeholder="mis. dibungkus terpisah">
+      <label for="bayar">Metode pembayaran</label>
+      <select class="f" id="bayar"></select>
+      <div class="total"><span>Total</span><span id="total">Rp0</span></div>
+      <div class="err" id="err"></div>
+      <button type="submit">Kirim Pesanan &amp; Buat Nota</button>
+    </div>
+  </section>
+</form>
+
+<section id="notasec">
+  <div id="nota">
+    <h2>Nota Pesanan Kamu</h2>
+    <div class="nota" id="notaisi"></div>
+    <button class="wa noprint" id="btnWA" type="button">Kirim Nota ke WhatsApp Penjual</button>
+    <button class="alt noprint" type="button" onclick="window.print()">Simpan / Cetak Nota (PDF)</button>
+    <button class="noprint" type="button" onclick="location.reload()">Buat Pesanan Baru</button>
+  </div>
+</section>
+</div>
+
+<footer>© Iwak Asepan Trawas • Kesiman, Trawas, Mojokerto</footer>
+
+<script>
+/* ===== EDIT BAGIAN INI SAJA ===== */
+const NOMOR_WA = "6285706464267"; // 0857-0646-4267 format internasional
+const NAMA_USAHA = "Iwak Asepan Trawas";
+const REKENING = [ // ganti dengan data asli
+  {nama:"DANA",      no:"0857-0646-4267", an:"ISI NAMA PEMILIK"},
+  {nama:"GoPay",     no:"0857-0646-4267", an:"ISI NAMA PEMILIK"},
+  {nama:"Transfer BRI/BCA/dll", no:"ISI NO REKENING", an:"ISI NAMA PEMILIK"},
+  {nama:"Bayar di tempat (COD)", no:"-", an:"-"}
+];
+// harga per ekor; kalau lebih dari satu angka, pembeli memilih sesuai ukuran
+const MENU = [
+  {id:"lele",   nama:"Lele Asap",     harga:[7000]},
+  {id:"nila",   nama:"Nila Asap",     harga:[12000,25000], ket:"pilih harga sesuai ukuran"},
+  {id:"bawal",  nama:"Bawal Asap",    harga:[10000]},
+  {id:"sombro", nama:"Sombro Asap",   harga:[8000,10000], ket:"pilih harga sesuai ukuran"},
+  {id:"wader",  nama:"Wader Asap",    harga:[8000,10000], ket:"pilih harga sesuai ukuran"},
+  {id:"kuning", nama:"Kuningan Asap", harga:[7000]}
+];
+/* ================================= */
+
+const rp = n => "Rp" + n.toLocaleString("id-ID");
+const $ = id => document.getElementById(id);
+let ORDER = null;
+
+// render menu
+$("menu").innerHTML = MENU.map(m => {
+  const h = m.harga.length > 1
+    ? `<select class="hargasel" id="h_${m.id}">${m.harga.map(x=>`<option value="${x}">${rp(x)}</option>`).join("")}</select>`
+    : `<span class="hargatxt">${rp(m.harga[0])}</span>`;
+  return `<div class="item"><div class="nama">${m.nama}<span>${m.ket||"per ekor"}</span></div>${h}
+  <input class="qty" type="number" min="0" value="0" id="q_${m.id}" inputmode="numeric"></div>`;
+}).join("");
+
+$("bayar").innerHTML = REKENING.map((r,i)=>`<option value="${i}">${r.nama}</option>`).join("");
+
+// tanggal minimal hari ini
+const t = new Date(); t.setMinutes(t.getMinutes()-t.getTimezoneOffset());
+$("tgl").min = t.toISOString().slice(0,10);
+
+function hargaItem(m){ const s=$("h_"+m.id); return s ? +s.value : m.harga[0]; }
+function hitung(){
+  let tot=0; MENU.forEach(m=>{ tot += (+$("q_"+m.id).value||0)*hargaItem(m); });
+  $("total").textContent = rp(tot); return tot;
+}
+document.addEventListener("input", hitung);
+
+function esc(s){ return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function tglID(s){ return new Date(s+"T00:00:00").toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"long",year:"numeric"}); }
+
+function buatNota(e){
+  e.preventDefault();
+  const items = MENU.map(m=>({nama:m.nama,qty:+$("q_"+m.id).value||0,harga:hargaItem(m)})).filter(i=>i.qty>0);
+  const err = $("err");
+  if(!items.length){ err.style.display="block"; err.textContent="Pilih minimal 1 ikan (isi jumlahnya)."; return false; }
+  err.style.display="none";
+  const total = items.reduce((a,i)=>a+i.qty*i.harga,0);
+  const d = new Date();
+  const no = "IAT-" + String(d.getFullYear()).slice(2) + String(d.getMonth()+1).padStart(2,"0") + String(d.getDate()).padStart(2,"0") + "-" + Math.floor(1000+Math.random()*9000);
+  const rek = REKENING[+$("bayar").value];
+  ORDER = {no, items, total, rek,
+    nama:$("nama").value.trim(), wa:$("wa").value.trim(), alamat:$("alamat").value.trim(),
+    tgl:$("tgl").value, jam:$("jam").value, catatan:$("catatan").value.trim(),
+    waktu:d.toLocaleString("id-ID")};
+
+  const baris = items.map(i=>`<tr><td>${i.nama}<br>${i.qty} x ${rp(i.harga)}</td><td>${rp(i.qty*i.harga)}</td></tr>`).join("");
+  const bayar = rek.no==="-" ? `<div class="rek">${esc(rek.nama)}</div>` :
+    `<div class="rek"><b>${esc(rek.nama)}</b><br>${esc(rek.no)}<br>a.n. ${esc(rek.an)}</div>`;
+  $("notaisi").innerHTML = `
+    <h3>${NAMA_USAHA}</h3>
+    <div style="text-align:center;font-size:.8rem">Kesiman, Trawas, Mojokerto</div><hr>
+    <table><tr><td>No. Pesanan</td><td>${no}</td></tr><tr><td>Dibuat</td><td>${ORDER.waktu}</td></tr></table><hr>
+    <table><tr><td>Nama</td><td>${esc(ORDER.nama)}</td></tr><tr><td>WhatsApp</td><td>${esc(ORDER.wa)}</td></tr></table>
+    <div style="margin-top:4px">Alamat: ${esc(ORDER.alamat)}</div>
+    <div>Kirim: <b>${tglID(ORDER.tgl)}, pukul ${ORDER.jam}</b></div>
+    ${ORDER.catatan?`<div>Catatan: ${esc(ORDER.catatan)}</div>`:""}<hr>
+    <table>${baris}</table><hr>
+    <table><tr><td><b>TOTAL</b></td><td><b>${rp(total)}</b></td></tr></table><hr>
+    <div><b>Pembayaran:</b></div>${bayar}
+    <div style="margin-top:8px;font-size:.8rem">Mohon kirim bukti bayar via WhatsApp. Pesanan diproses setelah dikonfirmasi penjual. Terima kasih 🙏</div>`;
+  $("nota").style.display="block";
+  $("menusec").style.display="none"; $("form").style.display="none";
+  $("nota").scrollIntoView({behavior:"smooth"});
+  return false;
+}
+
+$("btnWA").addEventListener("click",()=>{
+  const o=ORDER;
+  const list=o.items.map(i=>`- ${i.nama} ${i.qty} x ${rp(i.harga)} = ${rp(i.qty*i.harga)}`).join("\n");
+  const rekTxt=o.rek.no==="-"?o.rek.nama:`${o.rek.nama} ${o.rek.no} a.n. ${o.rek.an}`;
+  const teks=`*PESANAN ${NAMA_USAHA}*\nNo: ${o.no}\n\nNama: ${o.nama}\nWA: ${o.wa}\nAlamat: ${o.alamat}\nKirim: ${tglID(o.tgl)}, jam ${o.jam}\n${o.catatan?"Catatan: "+o.catatan+"\n":""}\n${list}\n\n*TOTAL: ${rp(o.total)}*\nPembayaran: ${rekTxt}\n\nSaya sudah/akan melakukan pembayaran. Mohon dikonfirmasi 🙏`;
+  window.open(`https://wa.me/${NOMOR_WA}?text=${encodeURIComponent(teks)}`,"_blank");
+});
+</script>
+</body>
+</html>
