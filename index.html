@@ -8,42 +8,51 @@
 <style>
 :root{--hijau:#0f4a3a;--hijau2:#176b53;--emas:#e8c987;--coklat:#b5733d;--krem:#fbf6ea;--teks:#2a2a22}
 *{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
 body{font-family:Georgia,'Times New Roman',serif;background:var(--hijau);color:var(--krem);line-height:1.5}
-.wrap{max-width:720px;margin:0 auto;padding:0 16px}
-header{text-align:center;padding:36px 16px 24px;background:radial-gradient(circle at top,var(--hijau2),var(--hijau))}
+.wrap{max-width:720px;margin:0 auto;padding:0 14px}
+header{text-align:center;padding:32px 16px 22px;background:radial-gradient(circle at top,var(--hijau2),var(--hijau))}
 header small{letter-spacing:.35em;color:var(--emas);font-size:.8rem}
-header h1{font-size:2.4rem;color:var(--emas);line-height:1.1;margin:6px 0}
-header p{opacity:.9}
-.badge{display:inline-block;margin-top:12px;padding:6px 14px;border:1px solid var(--emas);border-radius:20px;font-size:.85rem;color:var(--emas)}
-section{padding:22px 0}
-h2{color:var(--emas);font-size:1.3rem;margin-bottom:12px;text-align:center}
+header h1{font-size:clamp(1.9rem,8vw,2.6rem);color:var(--emas);line-height:1.1;margin:6px 0}
+header p{opacity:.9;font-size:.95rem}
+.badge{display:inline-block;margin-top:12px;padding:6px 14px;border:1px solid var(--emas);border-radius:20px;font-size:.8rem;color:var(--emas)}
+section{padding:20px 0}
+h2{color:var(--emas);font-size:1.2rem;margin-bottom:12px;text-align:center}
 .menu{display:grid;gap:10px}
-.item{display:flex;align-items:center;gap:10px;background:var(--krem);color:var(--teks);border-radius:12px;padding:12px 14px}
-.item .nama{flex:1;font-weight:bold}
+.item{display:grid;grid-template-columns:1fr auto auto;gap:8px 10px;align-items:center;background:var(--krem);color:var(--teks);border-radius:12px;padding:12px}
+.item .nama{font-weight:bold}
 .item .nama span{display:block;font-weight:normal;font-size:.8rem;color:#6b6b5c}
-.item select,.item input{font:inherit}
-.qty{width:64px;padding:6px;border:1px solid #c9bfa5;border-radius:8px;text-align:center}
-.hargasel{padding:6px;border:1px solid #c9bfa5;border-radius:8px;background:#fff;max-width:110px}
+input,select,textarea,button{font:inherit;font-size:16px} /* 16px: cegah zoom otomatis di iPhone */
+.qty{width:76px;padding:9px 6px;border:1px solid #c9bfa5;border-radius:8px;text-align:center;background:#fff;color:var(--teks)}
+.hargasel{padding:9px 6px;border:1px solid #c9bfa5;border-radius:8px;background:#fff;color:var(--teks);min-width:112px}
 .hargatxt{color:var(--coklat);font-weight:bold;white-space:nowrap}
-form .card{background:var(--krem);color:var(--teks);border-radius:14px;padding:16px;margin-top:12px}
+@media(max-width:480px){
+  .item{grid-template-columns:1fr auto}
+  .item .nama{grid-column:1/-1}
+  .hargasel{min-width:0;width:100%}
+}
+.card{background:var(--krem);color:var(--teks);border-radius:14px;padding:14px;margin-top:12px}
 label{display:block;font-size:.85rem;margin:10px 0 4px;font-weight:bold}
-input[type=text],input[type=tel],input[type=date],select.f,textarea{width:100%;padding:10px;border:1px solid #c9bfa5;border-radius:8px;font:inherit;background:#fff}
+input[type=text],input[type=tel],input[type=date],input[type=time],input[type=number].f,select.f,textarea{width:100%;padding:10px;border:1px solid #c9bfa5;border-radius:8px;background:#fff;color:var(--teks)}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .total{display:flex;justify-content:space-between;font-size:1.15rem;font-weight:bold;margin-top:12px;color:var(--hijau)}
-button{width:100%;margin-top:14px;padding:14px;border:0;border-radius:12px;background:var(--coklat);color:#fff;font:bold 1.05rem Georgia,serif;cursor:pointer}
+button{width:100%;margin-top:12px;padding:14px;border:0;border-radius:12px;background:var(--coklat);color:#fff;font-weight:bold;font-family:Georgia,serif;cursor:pointer}
 button.alt{background:var(--hijau2)}
 button.wa{background:#1fa855}
+button.add{background:transparent;color:var(--hijau2);border:2px dashed var(--hijau2);margin-top:8px}
 .err{color:#b3261e;font-size:.85rem;margin-top:8px;display:none}
+.note{font-size:.8rem;color:#6b6b5c;margin-top:4px}
+/* varian custom */
+.cust{display:grid;grid-template-columns:1fr 1fr 70px 40px;gap:8px;margin-top:10px;padding-top:10px;border-top:1px dashed #c9bfa5}
+.cust input{width:100%;padding:9px 8px;border:1px solid #c9bfa5;border-radius:8px;background:#fff;color:var(--teks)}
+.cust .c-nama{grid-column:1/-1}
+.cust .c-qty{text-align:center}
+.cust .del{margin:0;padding:0;height:42px;background:#b3261e;border-radius:8px;font-size:1.1rem}
+@media(max-width:480px){.cust{grid-template-columns:1fr 70px 40px}.cust .c-harga{grid-column:1}}
+/* nota */
 #nota{display:none}
-.nota{background:#fff;color:#222;border-radius:6px;padding:20px;font-family:'Courier New',monospace;font-size:.9rem}
-.nota h3{text-align:center;color:var(--hijau);font-family:Georgia,serif}
-.nota hr{border:0;border-top:1px dashed #999;margin:10px 0}
-.nota table{width:100%;border-collapse:collapse}
-.nota td{padding:2px 0;vertical-align:top}
-.nota td:last-child{text-align:right;white-space:nowrap}
-.rek{background:#f3efe2;padding:8px 10px;border-radius:6px;margin:4px 0}
+#notaimg{display:block;width:100%;height:auto;border-radius:8px;background:#fff}
 footer{text-align:center;padding:24px 16px;font-size:.8rem;opacity:.8}
-@media print{body{background:#fff}header,section:not(#notasec),footer,.noprint{display:none!important}.nota{border:0}}
 </style>
 </head>
 <body>
@@ -60,15 +69,22 @@ footer{text-align:center;padding:24px 16px;font-size:.8rem;opacity:.8}
   <section id="menusec">
     <h2>1. Pilih Ikan Asap</h2>
     <div class="menu" id="menu"></div>
+
+    <div class="card">
+      <b>Varian lain / pesanan khusus</b>
+      <div class="note">Tidak ada di daftar? Tulis sendiri nama ikan dan harganya per ekor.</div>
+      <div id="custom"></div>
+      <button type="button" class="add" id="btnAdd">+ Tambah Varian</button>
+    </div>
   </section>
 
   <section>
     <h2>2. Data Pemesan &amp; Pengiriman</h2>
-    <div class="card">
+    <div class="card" style="margin-top:0">
       <label for="nama">Nama</label>
-      <input type="text" id="nama" required>
+      <input type="text" id="nama" autocomplete="name" required>
       <label for="wa">No. WhatsApp</label>
-      <input type="tel" id="wa" placeholder="08xxxxxxxxxx" required>
+      <input type="tel" id="wa" placeholder="08xxxxxxxxxx" autocomplete="tel" required>
       <label for="alamat">Alamat pengiriman</label>
       <textarea id="alamat" rows="2" required></textarea>
       <div class="row">
@@ -89,10 +105,13 @@ footer{text-align:center;padding:24px 16px;font-size:.8rem;opacity:.8}
 <section id="notasec">
   <div id="nota">
     <h2>Nota Pesanan Kamu</h2>
-    <div class="nota" id="notaisi"></div>
-    <button class="wa noprint" id="btnWA" type="button">Kirim Nota ke WhatsApp Penjual</button>
-    <button class="alt noprint" type="button" onclick="window.print()">Simpan / Cetak Nota (PDF)</button>
-    <button class="noprint" type="button" onclick="location.reload()">Buat Pesanan Baru</button>
+    <img id="notaimg" alt="Nota pesanan">
+    <div class="card">
+      <button class="wa" id="btnWA" type="button" style="margin-top:0">Kirim Nota (Gambar) ke WhatsApp</button>
+      <div class="note" id="hintWA"></div>
+      <button class="alt" id="btnDL" type="button">Simpan Nota (PNG)</button>
+      <button type="button" onclick="location.reload()">Buat Pesanan Baru</button>
+    </div>
   </div>
 </section>
 </div>
@@ -103,95 +122,176 @@ footer{text-align:center;padding:24px 16px;font-size:.8rem;opacity:.8}
 /* ===== EDIT BAGIAN INI SAJA ===== */
 const NOMOR_WA = "6285706464267"; // 0857-0646-4267 format internasional
 const NAMA_USAHA = "Iwak Asepan Trawas";
+const ALAMAT_USAHA = "Kesiman, Trawas, Mojokerto";
 const REKENING = [ // ganti dengan data asli
   {nama:"DANA",      no:"0857-0646-4267", an:"ISI NAMA PEMILIK"},
   {nama:"GoPay",     no:"0857-0646-4267", an:"ISI NAMA PEMILIK"},
-  {nama:"Transfer BRI/BCA/dll", no:"ISI NO REKENING", an:"ISI NAMA PEMILIK"},
+  {nama:"Transfer Bank", no:"ISI NO REKENING", an:"ISI NAMA PEMILIK"},
   {nama:"Bayar di tempat (COD)", no:"-", an:"-"}
 ];
-// harga per ekor; kalau lebih dari satu angka, pembeli memilih sesuai ukuran
+// range(awal, akhir, selisih) -> membuat pilihan harga otomatis
+const range = (a,b,s) => { const r=[]; for(let x=a;x<=b;x+=s) r.push(x); return r; };
 const MENU = [
   {id:"lele",   nama:"Lele Asap",     harga:[7000]},
-  {id:"nila",   nama:"Nila Asap",     harga:[12000,25000], ket:"pilih harga sesuai ukuran"},
+  {id:"nila",   nama:"Nila Asap",     harga:range(15000,25000,1000), ket:"pilih harga sesuai ukuran"},
   {id:"bawal",  nama:"Bawal Asap",    harga:[10000]},
-  {id:"sombro", nama:"Sombro Asap",   harga:[8000,10000], ket:"pilih harga sesuai ukuran"},
-  {id:"wader",  nama:"Wader Asap",    harga:[8000,10000], ket:"pilih harga sesuai ukuran"},
+  {id:"sombro", nama:"Sombro Asap",   harga:range(8000,10000,500),  ket:"pilih harga sesuai ukuran"},
+  {id:"wader",  nama:"Wader Asap",    harga:range(8000,10000,500),  ket:"pilih harga sesuai ukuran"},
   {id:"kuning", nama:"Kuningan Asap", harga:[7000]}
 ];
 /* ================================= */
 
-const rp = n => "Rp" + n.toLocaleString("id-ID");
+const rp = n => "Rp" + Math.round(n).toLocaleString("id-ID");
 const $ = id => document.getElementById(id);
 let ORDER = null;
 
-// render menu
+/* ---- menu ---- */
 $("menu").innerHTML = MENU.map(m => {
   const h = m.harga.length > 1
-    ? `<select class="hargasel" id="h_${m.id}">${m.harga.map(x=>`<option value="${x}">${rp(x)}</option>`).join("")}</select>`
+    ? `<select class="hargasel" id="h_${m.id}" aria-label="Harga ${m.nama}">${m.harga.map(x=>`<option value="${x}">${rp(x)}</option>`).join("")}</select>`
     : `<span class="hargatxt">${rp(m.harga[0])}</span>`;
   return `<div class="item"><div class="nama">${m.nama}<span>${m.ket||"per ekor"}</span></div>${h}
-  <input class="qty" type="number" min="0" value="0" id="q_${m.id}" inputmode="numeric"></div>`;
+  <input class="qty" type="number" min="0" value="0" id="q_${m.id}" inputmode="numeric" aria-label="Jumlah ${m.nama}"></div>`;
 }).join("");
-
 $("bayar").innerHTML = REKENING.map((r,i)=>`<option value="${i}">${r.nama}</option>`).join("");
 
-// tanggal minimal hari ini
+/* ---- varian custom ---- */
+function tambahVarian(){
+  const d = document.createElement("div");
+  d.className = "cust";
+  d.innerHTML = `<input class="c-nama" type="text" placeholder="Nama ikan (mis. Gabus Asap)" aria-label="Nama varian">
+    <input class="c-harga" type="number" min="0" step="500" inputmode="numeric" placeholder="Harga / ekor" aria-label="Harga varian">
+    <input class="c-qty" type="number" min="0" value="1" inputmode="numeric" aria-label="Jumlah varian">
+    <button type="button" class="del" aria-label="Hapus varian">✕</button>`;
+  d.querySelector(".del").onclick = () => { d.remove(); hitung(); };
+  $("custom").appendChild(d);
+}
+$("btnAdd").onclick = tambahVarian;
+
+/* ---- tanggal minimal hari ini ---- */
 const t = new Date(); t.setMinutes(t.getMinutes()-t.getTimezoneOffset());
 $("tgl").min = t.toISOString().slice(0,10);
 
+/* ---- hitung ---- */
 function hargaItem(m){ const s=$("h_"+m.id); return s ? +s.value : m.harga[0]; }
+function ambilItems(){
+  const items = [];
+  MENU.forEach(m => { const q=+$("q_"+m.id).value||0; if(q>0) items.push({nama:m.nama,qty:q,harga:hargaItem(m)}); });
+  let bad = false;
+  document.querySelectorAll(".cust").forEach(r => {
+    const nama=r.querySelector(".c-nama").value.trim(), harga=+r.querySelector(".c-harga").value||0, qty=+r.querySelector(".c-qty").value||0;
+    if(!nama && !harga) return;               // baris kosong diabaikan
+    if(!nama || harga<=0){ bad = true; return; }
+    if(qty>0) items.push({nama,qty,harga});
+  });
+  return {items,bad};
+}
 function hitung(){
-  let tot=0; MENU.forEach(m=>{ tot += (+$("q_"+m.id).value||0)*hargaItem(m); });
+  const {items} = ambilItems();
+  const tot = items.reduce((a,i)=>a+i.qty*i.harga,0);
   $("total").textContent = rp(tot); return tot;
 }
 document.addEventListener("input", hitung);
 
-function esc(s){ return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
-function tglID(s){ return new Date(s+"T00:00:00").toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"long",year:"numeric"}); }
+const tglID = s => new Date(s+"T00:00:00").toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
 
+/* ---- gambar nota (canvas) ---- */
+function gambarNota(o){
+  const S=2, W=600, P=30, IW=W-2*P;
+  const m = document.createElement("canvas").getContext("2d");
+  const F = (sz,b)=>`${b?"bold ":""}${sz}px Arial, Helvetica, sans-serif`;
+  const cmds=[]; let y=0;
+  const wrap=(txt,font,maxW)=>{ m.font=font; const out=[]; let cur="";
+    String(txt).split(/\s+/).forEach(w=>{ const t=cur?cur+" "+w:w;
+      if(m.measureText(t).width>maxW && cur){out.push(cur);cur=w}else cur=t; });
+    if(cur) out.push(cur); return out; };
+  const text=(str,x,yy,font,color,align)=>cmds.push(c=>{c.font=font;c.fillStyle=color;c.textAlign=align||"left";c.fillText(str,x,yy);});
+  const hr=yy=>cmds.push(c=>{c.strokeStyle="#bbb";c.setLineDash([5,4]);c.beginPath();c.moveTo(P,yy);c.lineTo(W-P,yy);c.stroke();c.setLineDash([]);});
+  const kv=(k,v,bold)=>{ const lines=wrap(v,F(15,bold),IW-150);
+    text(k,P,y,F(15),"#555");
+    lines.forEach((l,i)=>text(l,W-P,y+i*21,F(15,bold),"#111","right"));
+    y+=Math.max(1,lines.length)*21+3; };
+
+  // header
+  cmds.push(c=>{c.fillStyle="#0f4a3a";c.fillRect(0,0,W,112);c.fillStyle="#e8c987";c.fillRect(0,112,W,5);});
+  text(NAMA_USAHA,W/2,52,F(30,true),"#e8c987","center");
+  text("Ikan Asap Batok Kelapa Asli",W/2,76,F(14),"#fbf6ea","center");
+  text(ALAMAT_USAHA,W/2,97,F(13),"#cfe3da","center");
+  y=148;
+  text("NOTA PESANAN",W/2,y,F(18,true),"#0f4a3a","center"); y+=26;
+  hr(y-12);
+  kv("No. Pesanan",o.no,true); kv("Dibuat",o.waktu); y+=4; hr(y-6); y+=14;
+  kv("Nama",o.nama); kv("WhatsApp",o.wa); kv("Alamat",o.alamat);
+  kv("Kirim",tglID(o.tgl)); kv("Jam kirim",o.jam);
+  if(o.catatan) kv("Catatan",o.catatan);
+  y+=4; hr(y-6); y+=18;
+  o.items.forEach(i=>{
+    const lines=wrap(i.nama,F(16,true),IW-130);
+    lines.forEach((l,k)=>text(l,P,y+k*21,F(16,true),"#111"));
+    text(rp(i.qty*i.harga),W-P,y,F(16,true),"#111","right");
+    y+=lines.length*21;
+    text(`${i.qty} x ${rp(i.harga)}`,P,y,F(13),"#666"); y+=26;
+  });
+  hr(y-8); y+=16;
+  text("TOTAL",P,y,F(20,true),"#0f4a3a"); text(rp(o.total),W-P,y,F(20,true),"#0f4a3a","right"); y+=18; hr(y); y+=26;
+  // pembayaran
+  text("Pembayaran",P,y,F(15,true),"#111"); y+=10;
+  const rl = o.rek.no==="-" ? [o.rek.nama] : [o.rek.nama, o.rek.no, "a.n. "+o.rek.an];
+  const bh = rl.length*24+18, by=y;
+  cmds.push(c=>{c.fillStyle="#f3efe2";c.fillRect(P,by,IW,bh);});
+  rl.forEach((l,k)=>text(l,P+14,by+26+k*24,F(k===1?19:15,k<2),"#111"));
+  y+=bh+22;
+  wrap("Mohon kirim bukti pembayaran lewat WhatsApp. Pesanan diproses setelah dikonfirmasi penjual. Terima kasih.",F(13),IW)
+    .forEach((l,k)=>text(l,W/2,y+k*18,F(13),"#555","center"));
+  y+=3*18+P-10;
+
+  const cv=document.createElement("canvas"); cv.width=W*S; cv.height=y*S;
+  const c=cv.getContext("2d"); c.scale(S,S);
+  c.fillStyle="#fff"; c.fillRect(0,0,W,y);
+  cmds.forEach(f=>f(c));
+  return cv;
+}
+
+/* ---- buat nota ---- */
 function buatNota(e){
   e.preventDefault();
-  const items = MENU.map(m=>({nama:m.nama,qty:+$("q_"+m.id).value||0,harga:hargaItem(m)})).filter(i=>i.qty>0);
-  const err = $("err");
+  const err=$("err"), {items,bad}=ambilItems();
+  if(bad){ err.style.display="block"; err.textContent="Varian lain: isi nama ikan dan harga per ekor dengan lengkap."; return false; }
   if(!items.length){ err.style.display="block"; err.textContent="Pilih minimal 1 ikan (isi jumlahnya)."; return false; }
   err.style.display="none";
-  const total = items.reduce((a,i)=>a+i.qty*i.harga,0);
-  const d = new Date();
-  const no = "IAT-" + String(d.getFullYear()).slice(2) + String(d.getMonth()+1).padStart(2,"0") + String(d.getDate()).padStart(2,"0") + "-" + Math.floor(1000+Math.random()*9000);
-  const rek = REKENING[+$("bayar").value];
-  ORDER = {no, items, total, rek,
-    nama:$("nama").value.trim(), wa:$("wa").value.trim(), alamat:$("alamat").value.trim(),
-    tgl:$("tgl").value, jam:$("jam").value, catatan:$("catatan").value.trim(),
-    waktu:d.toLocaleString("id-ID")};
-
-  const baris = items.map(i=>`<tr><td>${i.nama}<br>${i.qty} x ${rp(i.harga)}</td><td>${rp(i.qty*i.harga)}</td></tr>`).join("");
-  const bayar = rek.no==="-" ? `<div class="rek">${esc(rek.nama)}</div>` :
-    `<div class="rek"><b>${esc(rek.nama)}</b><br>${esc(rek.no)}<br>a.n. ${esc(rek.an)}</div>`;
-  $("notaisi").innerHTML = `
-    <h3>${NAMA_USAHA}</h3>
-    <div style="text-align:center;font-size:.8rem">Kesiman, Trawas, Mojokerto</div><hr>
-    <table><tr><td>No. Pesanan</td><td>${no}</td></tr><tr><td>Dibuat</td><td>${ORDER.waktu}</td></tr></table><hr>
-    <table><tr><td>Nama</td><td>${esc(ORDER.nama)}</td></tr><tr><td>WhatsApp</td><td>${esc(ORDER.wa)}</td></tr></table>
-    <div style="margin-top:4px">Alamat: ${esc(ORDER.alamat)}</div>
-    <div>Kirim: <b>${tglID(ORDER.tgl)}, pukul ${ORDER.jam}</b></div>
-    ${ORDER.catatan?`<div>Catatan: ${esc(ORDER.catatan)}</div>`:""}<hr>
-    <table>${baris}</table><hr>
-    <table><tr><td><b>TOTAL</b></td><td><b>${rp(total)}</b></td></tr></table><hr>
-    <div><b>Pembayaran:</b></div>${bayar}
-    <div style="margin-top:8px;font-size:.8rem">Mohon kirim bukti bayar via WhatsApp. Pesanan diproses setelah dikonfirmasi penjual. Terima kasih 🙏</div>`;
+  const total=items.reduce((a,i)=>a+i.qty*i.harga,0), d=new Date();
+  const no="IAT-"+String(d.getFullYear()).slice(2)+String(d.getMonth()+1).padStart(2,"0")+String(d.getDate()).padStart(2,"0")+"-"+Math.floor(1000+Math.random()*9000);
+  ORDER={no,items,total,rek:REKENING[+$("bayar").value],
+    nama:$("nama").value.trim(),wa:$("wa").value.trim(),alamat:$("alamat").value.trim(),
+    tgl:$("tgl").value,jam:$("jam").value,catatan:$("catatan").value.trim(),waktu:d.toLocaleString("id-ID")};
+  const cv=gambarNota(ORDER);
+  $("notaimg").src=cv.toDataURL("image/png");
+  cv.toBlob(b=>{ ORDER.file=new File([b],`nota-${no}.png`,{type:"image/png"}); },"image/png");
+  const canShareFile = navigator.canShare && navigator.canShare({files:[new File([""],"a.png",{type:"image/png"})]});
+  $("hintWA").textContent = canShareFile
+    ? "Setelah ditekan, pilih WhatsApp lalu pilih kontak Iwak Asepan Trawas (0857-0646-4267)."
+    : "Nota akan diunduh dulu, lalu WhatsApp terbuka. Lampirkan gambar nota dari galeri/unduhan ke chat.";
   $("nota").style.display="block";
   $("menusec").style.display="none"; $("form").style.display="none";
   $("nota").scrollIntoView({behavior:"smooth"});
   return false;
 }
 
-$("btnWA").addEventListener("click",()=>{
-  const o=ORDER;
-  const list=o.items.map(i=>`- ${i.nama} ${i.qty} x ${rp(i.harga)} = ${rp(i.qty*i.harga)}`).join("\n");
-  const rekTxt=o.rek.no==="-"?o.rek.nama:`${o.rek.nama} ${o.rek.no} a.n. ${o.rek.an}`;
-  const teks=`*PESANAN ${NAMA_USAHA}*\nNo: ${o.no}\n\nNama: ${o.nama}\nWA: ${o.wa}\nAlamat: ${o.alamat}\nKirim: ${tglID(o.tgl)}, jam ${o.jam}\n${o.catatan?"Catatan: "+o.catatan+"\n":""}\n${list}\n\n*TOTAL: ${rp(o.total)}*\nPembayaran: ${rekTxt}\n\nSaya sudah/akan melakukan pembayaran. Mohon dikonfirmasi 🙏`;
-  window.open(`https://wa.me/${NOMOR_WA}?text=${encodeURIComponent(teks)}`,"_blank");
-});
+function unduh(){
+  const a=document.createElement("a"); a.href=$("notaimg").src; a.download=`nota-${ORDER.no}.png`;
+  document.body.appendChild(a); a.click(); a.remove();
+}
+$("btnDL").onclick = unduh;
+
+$("btnWA").onclick = async () => {
+  const o=ORDER, teks=`Halo ${NAMA_USAHA}, ini nota pesanan ${o.no} atas nama ${o.nama}. Total ${rp(o.total)}. Mohon dikonfirmasi.`;
+  if(o.file && navigator.canShare && navigator.canShare({files:[o.file]})){
+    try{ await navigator.share({files:[o.file],text:teks}); return; }
+    catch(e){ if(e.name==="AbortError") return; }
+  }
+  unduh();
+  setTimeout(()=>window.open(`https://wa.me/${NOMOR_WA}?text=${encodeURIComponent(teks+" (nota terlampir sebagai gambar)")}`,"_blank"),600);
+};
 </script>
 </body>
 </html>
